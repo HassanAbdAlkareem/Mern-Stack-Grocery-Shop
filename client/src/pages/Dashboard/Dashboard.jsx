@@ -32,7 +32,7 @@ const Dashboard = () => {
     data.append("price", infoProduct.price);
     data.append("imgProduct", infoProduct.imgProduct);
     try {
-      await axios.post("http://localhost:5000/api/product", data);
+      await axios.post("https://grocery-shopp.herokuapp.com/api/product", data);
     } catch (error) {
       console.log(error.message);
     }

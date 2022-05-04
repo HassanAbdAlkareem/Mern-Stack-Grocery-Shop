@@ -7,7 +7,7 @@ import emptyCart from "../image/emptyCart.svg";
 const Cart = () => {
   const { openCart, setOpenCart, arrayCart, setArrayCart } =
     useContext(AlContext);
-  const PF = "http://localhost:5000/images/";
+  const PF = "https://grocery-shopp.herokuapp.com/images/";
 
   const increce = (item) => {
     const tempCart = [...arrayCart];

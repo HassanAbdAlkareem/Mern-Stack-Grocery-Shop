@@ -5,11 +5,11 @@ import axios from "axios";
 import { AlContext } from "../context/FunctionContext";
 
 const OurHot = () => {
+  const [pending, setPending] = useState(false);
   const [className, setClassName] = useState(0);
   const { products, setProducts, setOpenCart, arrayCart, setArrayCart } =
     useContext(AlContext);
-  const PF = "http://localhost:5000/images/";
-
+  const PF = "https://grocery-shopp.herokuapp.com/images/";
   //
   const categoires = [
     "chicken",
@@ -23,21 +23,31 @@ const OurHot = () => {
 
   const handleClick = async (cate) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/product/" + cate);
+      setPending(true);
+      const res = await axios.get(
+        "https://grocery-shopp.herokuapp.com/api/product/" + cate
+      );
       res.data && setProducts(res.data);
+      setPending(false);
     } catch (error) {
       console.log(error.message);
+      setPending(true);
     }
   };
 
   useEffect(() => {
     const getFirstChiken = async () => {
       try {
+        setPending(true);
         const res = await axios.get(
-          "http://localhost:5000/api/product/chicken"
+          "https://grocery-shopp.herokuapp.com/api/product/chicken"
         );
         res.data && setProducts(res.data);
-      } catch (error) {}
+        setPending(false);
+      } catch (error) {
+        console.log(error.message);
+        setPending(true);
+      }
     };
     getFirstChiken();
   }, []);
@@ -77,7 +87,13 @@ const OurHot = () => {
             </div>
           ))}
         </div>
+
         <div className="bottom">
+          {pending && (
+            <h2 style={{ textAlign: "center", margin: "1rem 0" }}>
+              Waiting Moment ...
+            </h2>
+          )}
           <div className="row">
             {products.map((p, i) => (
               <div key={i} className="col-12 col-sm-6  col-lg-4">
